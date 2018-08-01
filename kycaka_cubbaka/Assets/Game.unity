@@ -380,10 +380,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 648786f72e6b5534c8f4bda7fcbd0795, type: 3}
-    m_FontSize: 182
+    m_FontSize: 140
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 182
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0438\u0433\u0440\u0430 \u0432\u0438\u043A\u0442\u043E\u0440\u0438\u043D\u0430"
+  m_Text: "\u0438\u0433\u0440\u0430 \u041A\u0443\u0441\u0430\u043A\u0438-\u0447\u0443\u0431\u0430\u043A\u043A\u0438"
 --- !u!222 &247635989
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2135,10 +2135,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 648786f72e6b5534c8f4bda7fcbd0795, type: 3}
-    m_FontSize: 300
+    m_FontSize: 160
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2146,7 +2146,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: quiz game
+  m_Text: "\u0418\u0433\u0440\u0443\u043B\u044F \u043F\u0440\u043E \u0444\u0438\u043B\u044C\u043C\u0443\u043B\u0438"
 --- !u!222 &1446126485
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2747,6 +2747,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
