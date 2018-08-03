@@ -16,8 +16,8 @@ public class GameScript : MonoBehaviour {
     public int multiplierScore = 100;
 
     public Text questionText;
-    public Button[] answerBttns = new Button[3];
-    public Text[] answersText = new Text[3];
+    public Button[] answerBttns = new Button[1]; // numbers Button, количество кнопок
+    public Text[] answersText = new Text[1]; // numbers text in the button, тексты для кнопок (равны количеству кнопок)
     public GameObject[] answersIcons; // 0 - trueIcon; 1 - falseIcon;
     public Image headPanel;
     public GameObject exitPanel;
@@ -63,19 +63,27 @@ public class GameScript : MonoBehaviour {
         if (qList.Count > 0)
         {
             if (scoreText.gameObject.activeSelf) scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
-            randQ = Random.Range(0, qList.Count);
+           // randQ = Random.Range(0, qList.Count); //в случае викторины от 2х и выше
+            randQ = 0; // в случае одного ответа
             crntQ = qList[randQ] as QuestionsList;
             if (crntQ != null)
             {
                 questionText.text = crntQ.Question;
                 questionText.GetComponent<Animation>().Play("Bubble_Open_1");
                 List<string> answers = new List<string>(crntQ.answers);
-                for (int i = 0; i < crntQ.answers.Length; i++)
-                {
-                    int randA = Random.Range(0, answers.Count);
-                    answersText[i].text = answers[randA];
-                    answers.RemoveAt(randA);
-                }
+                // в случае одного ответа
+                // int randA = Random.Range(0, answers.Count); // рандомизатор ответа
+                int randA = 0; // фиксируем ответ на первом, 0 элемент списка ответов
+                answersText[0].text = answers[randA];
+                answers.RemoveAt(randA);
+                // в случае нескольких ответов запуск цикла for
+                /*  for (int i = 0; i < crntQ.answers.Length; i++)
+                  {
+                      int randA = Random.Range(0, answers.Count);
+                      answersText[i].text = answers[randA];
+                      answers.RemoveAt(randA);
+                  }
+                  */
             }
             StartCoroutine(answersBttnsInAnim());
             timeCount = publicTimeCount;
@@ -119,9 +127,16 @@ public class GameScript : MonoBehaviour {
     }
     IEnumerator answersBttnsInAnim()
     {
-        foreach (Button t in answerBttns) t.interactable = false;
+       // foreach (Button t in answerBttns) t.interactable = false;
         int i = 0;
         yield return new WaitForSeconds(1);
+        //Для работы одного ответа
+        if (!answerBttns[i].gameObject.activeSelf) answerBttns[i].gameObject.SetActive(true);
+        else answerBttns[i].GetComponent<Animation>().Play("Bubble_Open_2");
+
+
+        /*
+         // Еще одна штука для работы 3х ответов
         while (i < answerBttns.Length)
         {
             if (!answerBttns[i].gameObject.activeSelf) answerBttns[i].gameObject.SetActive(true);
@@ -129,7 +144,9 @@ public class GameScript : MonoBehaviour {
             i++;
             yield return new WaitForSeconds(1);
         }
-        foreach (Button t in answerBttns) t.interactable = true;
+        */
+        //  foreach (Button t in answerBttns) t.interactable = true; // эта штука перебирает кнопки, а у нас одна...
+        answerBttns[0].interactable = true; //убираем и заменяем на одну команду
         yield return StartCoroutine(timer());
     }
     IEnumerator timeOut()
@@ -154,12 +171,14 @@ public class GameScript : MonoBehaviour {
     IEnumerator trueOrFalse(bool check)
     {
         defaultColor = false;
-        foreach (Button t in answerBttns) t.interactable = false;
+       // foreach (Button t in answerBttns) t.interactable = false; // опять foreach заменяем на обычную, в отличие от викторины на 3 ответа
+        answerBttns[0].interactable = false;
         yield return new WaitForSeconds(1);
         if (check)
         {
             score = score + (multiplierScore * currentQ) + (timeCount * multiplierScore);
-            foreach (Button t in answerBttns) t.GetComponent<Animation>().Play("Bubble_Close_2");
+           // foreach (Button t in answerBttns) t.GetComponent<Animation>().Play("Bubble_Close_2"); // опять foreach заменяем на for
+
             trueColor = true;
             yield return new WaitForSeconds(0.5f);
             if (!answersIcons[0].activeSelf) answersIcons[0].SetActive(true);

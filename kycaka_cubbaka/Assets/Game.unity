@@ -1981,7 +1981,7 @@ RectTransform:
   - {fileID: 1844831395}
   m_Father: {fileID: 614506413}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -6.9084234}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 1.5, y: 88}
@@ -2904,12 +2904,12 @@ MonoBehaviour:
   questionText: {fileID: 1541918116}
   answerBttns:
   - {fileID: 1443093840}
-  - {fileID: 583368833}
-  - {fileID: 929108828}
+  - {fileID: 0}
+  - {fileID: 0}
   answersText:
   - {fileID: 1844831396}
-  - {fileID: 392312435}
-  - {fileID: 1824847044}
+  - {fileID: 0}
+  - {fileID: 0}
   answersIcons:
   - {fileID: 1260707946}
   - {fileID: 454178532}
