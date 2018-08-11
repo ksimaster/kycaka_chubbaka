@@ -33,6 +33,11 @@ public class GameScript : MonoBehaviour {
     public Texture2D editorImg;
     public Image bg;
 
+    // Для методов выбора команд и их названий 
+    
+    public string nameTeam1, nameTeam2, nameTeam3;
+    public bool numberTeam2, numberTeam3;
+
     private bool trueColor, falseColor,defaultColor;
     private int randQ;
     private List<object> qList;
@@ -227,6 +232,60 @@ public class GameScript : MonoBehaviour {
         }
         else { exitPanel.SetActive(false); Time.timeScale = 1; }
     }
+
+    public void statTable()
+    {
+
+
+    }
+
+    public void TeamBuild()
+    {
+        
+        
+        
+
+    }
+
+    public void BttnTwoTeam()
+    {
+        numberTeam2 = true;
+        numberTeam3 = false;
+        //далее включение анимации для наименования команд
+
+        var input = gameObject.GetComponent<InputField>();
+        var se = new InputField.SubmitEvent();
+        //se.AddListener(SubmitName);
+        input.onEndEdit = se;
+
+        //or simply use the line below, 
+        //input.onEndEdit.AddListener(SubmitName);  // This also works
+   
+
+    /*private void SubmitName(string arg0)
+    {
+        Debug.Log(arg0);
+    }
+    */
+}
+
+    public void BttnThreeTeam()
+    {
+        numberTeam2 = false;
+        numberTeam3 = true;
+        //далее включение анимации для наименования команд
+    }
+
+    public void NameTeam()
+    {
+        if(numberTeam2)
+            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, true, true);
+
+
+
+    }
+
+
 }
 
 [System.Serializable]
