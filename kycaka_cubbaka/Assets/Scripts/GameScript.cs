@@ -35,7 +35,7 @@ public class GameScript : MonoBehaviour {
 
     // Для методов выбора команд и их названий 
     
-    public string nameTeam1, nameTeam2, nameTeam3;
+   // public string nameTeam1, nameTeam2, nameTeam3;
     public bool numberTeam2, numberTeam3;
 
     private bool trueColor, falseColor,defaultColor;
@@ -233,7 +233,7 @@ public class GameScript : MonoBehaviour {
         else { exitPanel.SetActive(false); Time.timeScale = 1; }
     }
 
-    public void statTable()
+    public void StatTable()
     {
 
 
@@ -251,23 +251,34 @@ public class GameScript : MonoBehaviour {
     {
         numberTeam2 = true;
         numberTeam3 = false;
-        //далее включение анимации для наименования команд
+        //далее включение анимации для наименования команд, вызваемое 2 раза
 
+
+        //запись из поля данных в переменную
+        // первый способ
+        // se переменная из примера
         var input = gameObject.GetComponent<InputField>();
-        var se = new InputField.SubmitEvent();
+        var nameTeam1 = new InputField.SubmitEvent();
         //se.AddListener(SubmitName);
-        input.onEndEdit = se;
+        nameTeam1.AddListener(SubmitName);
+        input.onEndEdit = nameTeam1;
 
+        //второй способ
         //or simply use the line below, 
         //input.onEndEdit.AddListener(SubmitName);  // This also works
-   
+        input.onEndEdit.AddListener(SubmitName);
 
-    /*private void SubmitName(string arg0)
+        /*private void SubmitName(string arg0)
+        {
+            Debug.Log(arg0);
+        }
+        */
+    }
+    // Для тестирования заполнения формы
+    private void SubmitName(string arg0)
     {
         Debug.Log(arg0);
     }
-    */
-}
 
     public void BttnThreeTeam()
     {
