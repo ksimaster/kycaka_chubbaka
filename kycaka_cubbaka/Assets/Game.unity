@@ -4177,8 +4177,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1669128513}
-        m_MethodName: exitPan
-        m_Mode: 3
+        m_MethodName: BttnNameOfTeam
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5295,7 +5295,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1669128513}
-        m_MethodName: playBttn
+        m_MethodName: ChooseNumberOfTeam
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5539,9 +5539,14 @@ MonoBehaviour:
   headPanel: {fileID: 614506415}
   exitPanel: {fileID: 2286549}
   finalText: {fileID: 1524414302}
+  NumberOfTeam: {fileID: 1027118038}
+  NameOfTeam: {fileID: 22752481}
+  Input: {fileID: 2136722031}
+  BeginTeam: {fileID: 718486572}
   time: {fileID: 1837877949}
   recordText: {fileID: 256496097}
   scoreText: {fileID: 1446978977}
+  ij: 0
   editorImg: {fileID: 2800000, guid: 7416d3f6d544bc94e988e2cb28bf7472, type: 3}
   bg: {fileID: 2015693855}
   BttnExit: {fileID: 0}

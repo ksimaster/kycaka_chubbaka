@@ -22,9 +22,14 @@ public class GameScript : MonoBehaviour {
     public Image headPanel;
     public GameObject exitPanel;
     public GameObject finalText;
+    public GameObject NumberOfTeam;
+    public GameObject NameOfTeam;
+    public GameObject Input;
+    public GameObject BeginTeam;
     public Text time;
     public Text recordText;
     public Text scoreText;
+    public int ij;
     private int timeCount = 20;
     private int score;
     private float scoreForRecord;
@@ -52,8 +57,8 @@ public class GameScript : MonoBehaviour {
         if (defaultColor) headPanel.color = Color.Lerp(headPanel.color, defaultCC, 8 * Time.deltaTime);
         else if (trueColor) headPanel.color = Color.Lerp(headPanel.color, trueCC, 8 * Time.deltaTime);
         else if (falseColor) headPanel.color = Color.Lerp(headPanel.color, falseCC, 8 * Time.deltaTime);
-        if (Input.GetKeyDown(KeyCode.Escape) && !exitPanel.activeSelf) { exitPanel.SetActive(true); Time.timeScale = 0; }
-        else if (Input.GetKeyDown(KeyCode.Escape) && exitPanel.activeSelf) { exitPanel.SetActive(false); Time.timeScale = 1; }
+       /* if (Input.GetKeyDown(KeyCode.Escape) && !exitPanel.activeSelf) { exitPanel.SetActive(true); Time.timeScale = 0; }
+        else if (Input.GetKeyDown(KeyCode.Escape) && exitPanel.activeSelf) { exitPanel.SetActive(false); Time.timeScale = 1; } */
     }
 
     public void playBttn()
@@ -247,6 +252,13 @@ public class GameScript : MonoBehaviour {
         else { exitPanel.SetActive(false); Time.timeScale = 1; }
     }
 
+    public void ChooseNumberOfTeam()
+    {
+        NumberOfTeam.SetActive(true);
+        
+
+    }
+
     public void StatTable()
     {
 
@@ -254,39 +266,98 @@ public class GameScript : MonoBehaviour {
     }
 
     public void TeamBuild()
+    {     
+        
+
+    }
+
+    public void BttnNameOfTeam()
     {
+        if (numberTeam2)
+        {
+            // Если панелька с вводом команды не включена, надо включить
+            // ВОПРОС КААААК?????????
+           // if(NameOfTeam.ActiveSelf) NameOfTeam.
+            if (ij<3)
+            { 
+            switch (ij)
+            {
+                case 1:
+                    var input1 = gameObject.GetComponent<InputField>();
+                    var nameTeam1 = new InputField.SubmitEvent();
+                    //se.AddListener(SubmitName);
+                    nameTeam1.AddListener(SubmitName);
+                    input1.onEndEdit = nameTeam1;
+
+                    //второй способ
+                    //or simply use the line below, 
+                    //input.onEndEdit.AddListener(SubmitName);  // This also works
+                    input1.onEndEdit.AddListener(SubmitName);
+
+                    /*private void SubmitName(string arg0)
+                    {
+                      Debug.Log(arg0);
+                   }
+                    */
+                    break;
+
+                case 2:
+                    var input2 = gameObject.GetComponent<InputField>();
+                    var nameTeam2 = new InputField.SubmitEvent();
+                    //se.AddListener(SubmitName);
+                    nameTeam2.AddListener(SubmitName);
+                    input2.onEndEdit = nameTeam2;
+
+                    //второй способ
+                    //or simply use the line below, 
+                    //input.onEndEdit.AddListener(SubmitName);  // This also works
+                    input2.onEndEdit.AddListener(SubmitName);
+
+                    /*private void SubmitName(string arg0)
+                    {
+                      Debug.Log(arg0);
+                   }
+                    */
+                    break;
+            }
+                ij++;
+                NameOfTeam.SetActive(false);
+            
+            
+            } else
+            {
+                BeginTeam.SetActive(true);
+            }
+
+        }
+        else if (numberTeam3)
+        {
+            for (int ii = 1; ii < 3; ii++)
+            {
+                ij++;
+            }
+        }
         
-        
+
+
         
 
     }
 
     public void BttnTwoTeam()
     {
+        NumberOfTeam.SetActive(false);
         numberTeam2 = true;
         numberTeam3 = false;
-        //далее включение анимации для наименования команд, вызваемое 2 раза
+        ij = 1;
+        NameOfTeam.SetActive(true);
+       // NameTeam(ij);
+       
+       
+            
+       //}
 
-
-        //запись из поля данных в переменную
-        // первый способ
-        // se переменная из примера
-        var input = gameObject.GetComponent<InputField>();
-        var nameTeam1 = new InputField.SubmitEvent();
-        //se.AddListener(SubmitName);
-        nameTeam1.AddListener(SubmitName);
-        input.onEndEdit = nameTeam1;
-
-        //второй способ
-        //or simply use the line below, 
-        //input.onEndEdit.AddListener(SubmitName);  // This also works
-        input.onEndEdit.AddListener(SubmitName);
-
-        /*private void SubmitName(string arg0)
-        {
-            Debug.Log(arg0);
-        }
-        */
+        
     }
     // Для тестирования заполнения формы
     private void SubmitName(string arg0)
@@ -301,13 +372,75 @@ public class GameScript : MonoBehaviour {
         //далее включение анимации для наименования команд
     }
 
-    public void NameTeam()
+    public void NameTeam(int nt)
     {
-        if(numberTeam2)
-            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, true, true);
+        /*
+        if (numberTeam2)
+            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, true, true); */
+        //далее включение анимации для наименования команд, вызваемое 2 раза
 
 
+        //запись из поля данных в переменную
+        // первый способ
+        // se переменная из примера
+        switch(nt)
+        {
+            case 1:
+            var input1 = gameObject.GetComponent<InputField>();
+            var nameTeam1 = new InputField.SubmitEvent();
+                //se.AddListener(SubmitName);
+            nameTeam1.AddListener(SubmitName);
+            input1.onEndEdit = nameTeam1;
 
+         //второй способ
+         //or simply use the line below, 
+            //input.onEndEdit.AddListener(SubmitName);  // This also works
+            input1.onEndEdit.AddListener(SubmitName);
+
+                /*private void SubmitName(string arg0)
+                {
+                  Debug.Log(arg0);
+               }
+                */
+                break;
+
+            case 2:
+                var input2 = gameObject.GetComponent<InputField>();
+                var nameTeam2 = new InputField.SubmitEvent();
+                //se.AddListener(SubmitName);
+                nameTeam2.AddListener(SubmitName);
+                input2.onEndEdit = nameTeam2;
+
+                //второй способ
+                //or simply use the line below, 
+                //input.onEndEdit.AddListener(SubmitName);  // This also works
+                input2.onEndEdit.AddListener(SubmitName);
+
+                /*private void SubmitName(string arg0)
+                {
+                  Debug.Log(arg0);
+               }
+                */
+                break;
+            case 3:
+                var input3 = gameObject.GetComponent<InputField>();
+                var nameTeam3 = new InputField.SubmitEvent();
+                //se.AddListener(SubmitName);
+                nameTeam3.AddListener(SubmitName);
+                input3.onEndEdit = nameTeam3;
+
+                //второй способ
+                //or simply use the line below, 
+                //input.onEndEdit.AddListener(SubmitName);  // This also works
+                input3.onEndEdit.AddListener(SubmitName);
+
+                /*private void SubmitName(string arg0)
+                {
+                  Debug.Log(arg0);
+               }
+                */
+                break;
+        }
     }
 
 
