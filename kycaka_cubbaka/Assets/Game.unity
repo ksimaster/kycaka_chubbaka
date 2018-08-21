@@ -428,8 +428,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1669128513}
-        m_MethodName: exitPan
-        m_Mode: 3
+        m_MethodName: ShowExitBttn
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5544,6 +5544,7 @@ MonoBehaviour:
   scoreText: {fileID: 1446978977}
   editorImg: {fileID: 2800000, guid: 7416d3f6d544bc94e988e2cb28bf7472, type: 3}
   bg: {fileID: 2015693855}
+  BttnExit: {fileID: 0}
   numberTeam2: 0
   numberTeam3: 0
 --- !u!1 &1674519766

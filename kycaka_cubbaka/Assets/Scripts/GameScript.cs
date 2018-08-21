@@ -32,6 +32,7 @@ public class GameScript : MonoBehaviour {
     private bool answerClicked;
     public Texture2D editorImg;
     public Image bg;
+    public GameObject BttnExit;
 
     // Для методов выбора команд и их названий 
     
@@ -223,6 +224,19 @@ public class GameScript : MonoBehaviour {
             scoreText.gameObject.SetActive(false);
         }
     }
+
+
+
+    public void ShowExitBttn() {
+
+
+
+        exitPanel.SetActive(true);
+
+
+
+    }
+
     public void exitPan(int bttn)
     {
         if (bttn == 0)
