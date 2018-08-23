@@ -21,6 +21,7 @@ public class GameScript : MonoBehaviour {
     public GameObject[] answersIcons; // 0 - trueIcon; 1 - falseIcon;
     public Image headPanel;
     public GameObject exitPanel;
+    public GameObject RulsPanel;
     public GameObject finalText;
     public GameObject NumberOfTeam;
     public GameObject NameOfTeam;
@@ -230,14 +231,22 @@ public class GameScript : MonoBehaviour {
         }
     }
 
+    public void ShowRulstBttn()
+    {
 
+
+
+       RulsPanel.SetActive(true);
+       
+
+    }
 
     public void ShowExitBttn() {
 
 
 
         exitPanel.SetActive(true);
-
+        headPanel.GetComponent<Animation>().Play("HeadAnim");
 
 
     }
@@ -249,12 +258,14 @@ public class GameScript : MonoBehaviour {
             if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score);
             Application.Quit();
         }
-        else { exitPanel.SetActive(false); Time.timeScale = 1; }
+        else { exitPanel.SetActive(false); Time.timeScale = 1; ;
+            headPanel.GetComponent<Animation>().Play("HeadAnimOut"); }
     }
 
     public void ChooseNumberOfTeam()
     {
         NumberOfTeam.SetActive(true);
+        headPanel.GetComponent<Animation>().Play("HeadAnim");
         
 
     }
