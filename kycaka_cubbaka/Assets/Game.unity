@@ -560,8 +560,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0432\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E
-    \u0445\u043E\u0442\u0438\u0442\u0435 \u0432\u044B\u0439\u0442\u0438?"
+  m_Text: "\u041F\u0440\u0430\u0432\u0438\u043B\u0430 \u043A\u0443\u0441\u0430\u0447\u0438\u0435
+    \u0447\u0443\u0431\u0431\u0430\u0447\u0438\u0438!"
 --- !u!222 &206683079
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5923,7 +5923,7 @@ MonoBehaviour:
   - {fileID: 279463956}
   headPanel: {fileID: 614506415}
   exitPanel: {fileID: 2286549}
-  RulsPanel: {fileID: 0}
+  RulsPanel: {fileID: 1481216277}
   finalText: {fileID: 1524414302}
   NumberOfTeam: {fileID: 1027118038}
   NameOfTeam: {fileID: 22752481}
