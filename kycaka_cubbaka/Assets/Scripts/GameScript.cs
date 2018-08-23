@@ -22,6 +22,7 @@ public class GameScript : MonoBehaviour {
     public Image headPanel;
     public GameObject exitPanel;
     public GameObject RulsPanel;
+    public GameObject RulsPanel_2;
     public GameObject finalText;
     public GameObject NumberOfTeam;
     public GameObject NameOfTeam;
@@ -237,8 +238,57 @@ public class GameScript : MonoBehaviour {
 
 
        RulsPanel.SetActive(true);
+        headPanel.GetComponent<Animation>().Play("HeadAnim");
+
+
+    }
+
+
+    public void ShowRulstBttn2()
+    {
+
+
+
+        RulsPanel.SetActive(false);
+        RulsPanel_2.SetActive(true);
+
+
+    }
+
+    public void ShowRulstBttnbackRuls1()
+    {
+
+
+        RulsPanel_2.SetActive(false);
+        RulsPanel.SetActive(true);
        
 
+
+    }
+
+    public void ShowRulstexit()
+    {
+
+
+        RulsPanel_2.SetActive(false);
+
+        headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+
+
+    }
+
+    public void RulstPan(int bttn)
+    {
+        if (bttn == 0)
+        {
+            if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score);
+            Application.Quit();
+        }
+        else
+        {
+            RulsPanel.SetActive(false); Time.timeScale = 1; ;
+            headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+        }
     }
 
     public void ShowExitBttn() {
