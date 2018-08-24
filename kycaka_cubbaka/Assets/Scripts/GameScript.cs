@@ -23,15 +23,16 @@ public class GameScript : MonoBehaviour {
     public GameObject exitPanel;
     public GameObject RulsPanel;
     public GameObject RulsPanel_2;
+    public GameObject PausePanel;
     public GameObject finalText;
     public GameObject NumberOfTeam;
     public GameObject NameOfTeam1;
     public GameObject NameOfTeam2;
     public GameObject NameOfTeam3;
+    public GameObject BeginTeam;
     public InputField InputNOT1;
     public InputField InputNOT2;
     public InputField InputNOT3;
-    public GameObject BeginTeam;
     public Text time;
     public Text recordText;
     public Text scoreText;
@@ -64,8 +65,10 @@ public class GameScript : MonoBehaviour {
         if (defaultColor) headPanel.color = Color.Lerp(headPanel.color, defaultCC, 8 * Time.deltaTime);
         else if (trueColor) headPanel.color = Color.Lerp(headPanel.color, trueCC, 8 * Time.deltaTime);
         else if (falseColor) headPanel.color = Color.Lerp(headPanel.color, falseCC, 8 * Time.deltaTime);
-       /* if (Input.GetKeyDown(KeyCode.Escape) && !exitPanel.activeSelf) { exitPanel.SetActive(true); Time.timeScale = 0; }
-        else if (Input.GetKeyDown(KeyCode.Escape) && exitPanel.activeSelf) { exitPanel.SetActive(false); Time.timeScale = 1; } */
+
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !PausePanel.activeSelf) { PausePanel.SetActive(true); Time.timeScale = 0; }
+        else if (Input.GetKeyDown(KeyCode.Escape) && PausePanel.activeSelf) { PausePanel.SetActive(false); Time.timeScale = 1; }
     }
 
     public void playBttn()
@@ -271,6 +274,13 @@ public class GameScript : MonoBehaviour {
 
     }
 
+
+ 
+
+
+
+
+
     public void ShowRulstexit()
     {
 
@@ -296,7 +306,42 @@ public class GameScript : MonoBehaviour {
         }
     }
 
-    public void ShowExitBttn() {
+
+
+    public void ReturneMainMenu()
+
+
+    {
+
+        NumberOfTeam.SetActive(false);
+        PausePanel.SetActive(false);
+        headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+
+
+
+
+
+    }
+
+    public void PusePan(int bttn)
+    {
+        if (bttn == 0)
+        {
+            if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score);
+            Application.Quit();
+        }
+        else
+        {
+            PausePanel.SetActive(false); Time.timeScale = 1; ;
+          
+        }
+    }
+
+
+
+
+    public void ShowExitBttn()
+    {
 
 
 
@@ -597,6 +642,8 @@ NameOfTeam.SetActive(false);
                 break;
         }
     }
+
+
 
 
 }
