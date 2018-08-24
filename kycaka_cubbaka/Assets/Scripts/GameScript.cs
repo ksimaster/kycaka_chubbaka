@@ -393,7 +393,7 @@ public class GameScript : MonoBehaviour {
     public void SaveNameTeamTwo()
     {
 
-        nameT1 = InputNOT2.text;
+        nameT2 = InputNOT2.text;
         Debug.Log(nameT2);
 
     }
@@ -401,7 +401,7 @@ public class GameScript : MonoBehaviour {
     public void SaveNameTeamThree()
     {
 
-        nameT1 = InputNOT3.text;
+        nameT3 = InputNOT3.text;
         Debug.Log(nameT3);
 
     }
@@ -416,15 +416,22 @@ public class GameScript : MonoBehaviour {
     public void BttnNameOfTeamTwo()
     {
 
-        NameOfTeam1.SetActive(false);
-        NameOfTeam2.SetActive(true);
+        NameOfTeam2.SetActive(false);
+        if (numberTeam2)
+        {
+            BeginTeam.SetActive(true);
+        }else
+        {
+            NameOfTeam3.SetActive(true);
+        }
+        
     }
 
     public void BttnNameOfTeamThree()
     {
 
-        NameOfTeam1.SetActive(false);
-        NameOfTeam2.SetActive(true);
+        NameOfTeam3.SetActive(false);
+        BeginTeam.SetActive(true);
     }
 
     /* //Скрипт по умному с очищением input

@@ -2874,7 +2874,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1669128513}
-        m_MethodName: BttnNameOfTeam
+        m_MethodName: BttnNameOfTeamThree
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3016,8 +3016,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1669128513}
-        m_MethodName: exitPan
-        m_Mode: 3
+        m_MethodName: playBttn
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4233,7 +4233,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1669128513}
-        m_MethodName: BttnNameOfTeam
+        m_MethodName: BttnNameOfTeamTwo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7225,7 +7225,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041C\u0443\u0440\u0430\u0448\u0438"
+  m_Text: 
 --- !u!222 &1458880682
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8141,7 +8141,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0427\u0443\u0431\u0430\u043A\u043A\u0438"
+  m_Text: 
 --- !u!222 &1561785116
 CanvasRenderer:
   m_ObjectHideFlags: 0
