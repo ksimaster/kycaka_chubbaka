@@ -126,7 +126,7 @@ public class GameScript : MonoBehaviour {
         headPanel.GetComponent<Animation>().Play("HeadAnimOut");
         scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
         finalText.GetComponent<Animation>().Play("Bubble_Close_3");
-        if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score);
+       // if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score); //Обновляет рекорд, у нас как дополнение при максимальной серии угадываний игроком
     }
     IEnumerator timer()
     {
@@ -187,7 +187,7 @@ public class GameScript : MonoBehaviour {
         falseColor = false;
         defaultColor = true;
         headPanel.GetComponent<Animation>().Play("HeadAnimOut");
-        if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score);
+       // if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score); //Обновление рекорда, дубль для качественной работы, пока не требуется 
     }
     IEnumerator trueOrFalse(bool check)
     {
@@ -197,7 +197,11 @@ public class GameScript : MonoBehaviour {
         yield return new WaitForSeconds(1);
         if (check)
         {
-            score = score + (multiplierScore * currentQ) + (timeCount * multiplierScore);
+            score = score + 1;
+
+            //Интересное решение, которое можно добавить к расширенной версии игры или доп. возможностям
+          /*  score = score + (multiplierScore * currentQ) + (timeCount * multiplierScore); */
+            //
            // foreach (Button t in answerBttns) t.GetComponent<Animation>().Play("Bubble_Close_2"); // опять foreach заменяем на for
 
             trueColor = true;
@@ -559,7 +563,7 @@ NameOfTeam.SetActive(false);
        
        
             
-       //}
+      
 
         
     }
