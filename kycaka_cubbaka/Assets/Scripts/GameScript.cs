@@ -22,6 +22,10 @@ public class GameScript : MonoBehaviour {
     public Image headPanel;
     public GameObject exitPanel;
     public GameObject RulsPanel;
+    public GameObject open_audio;
+    public GameObject close_audio;
+    public GameObject Audio_on_off;
+    public GameObject Audio_on_off_1;
     public GameObject RulsPanel_2;
     public GameObject PausePanel;
     public GameObject finalText;
@@ -315,8 +319,34 @@ public class GameScript : MonoBehaviour {
 
     }
 
+    public void ShowAudioBttn()
+    {
 
- 
+
+
+        Audio_on_off.SetActive(true);
+        Audio_on_off_1.SetActive(true);
+        open_audio.SetActive(false);
+        close_audio.SetActive(true);
+
+
+    }
+
+
+
+    public void ShowAudioBttn_1()
+    {
+
+
+
+        Audio_on_off.SetActive(false);
+        Audio_on_off_1.SetActive(false);
+        close_audio.SetActive(false);
+        open_audio.SetActive(true);
+
+
+    }
+
 
 
 
