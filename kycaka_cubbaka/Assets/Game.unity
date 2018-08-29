@@ -7944,7 +7944,7 @@ GameObject:
   - component: {fileID: 1504536976}
   - component: {fileID: 1504536975}
   m_Layer: 5
-  m_Name: Text
+  m_Name: BeginTeamTextScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9354,12 +9354,16 @@ MonoBehaviour:
   time: {fileID: 1837877949}
   recordText: {fileID: 256496097}
   scoreText: {fileID: 1446978977}
+  BeginTeamText: {fileID: 1504536976}
   ij: 0
   editorImg: {fileID: 2800000, guid: 7416d3f6d544bc94e988e2cb28bf7472, type: 3}
   bg: {fileID: 2015693855}
   BttnExit: {fileID: 0}
   numberTeam2: 0
   numberTeam3: 0
+  teamOneRC: 0
+  teamTwoRC: 0
+  teamThreeRC: 0
   nameT1: 
   nameT2: 
   nameT3: 

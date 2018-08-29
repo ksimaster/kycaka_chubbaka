@@ -36,9 +36,13 @@ public class GameScript : MonoBehaviour {
     public Text time;
     public Text recordText;
     public Text scoreText;
+    public Text BeginTeamText;
     public int ij;
     private int timeCount = 20;
-    private int score;
+    private int score = 0;
+    private int scoreTeamOne = 0;
+    private int scoreTeamTwo = 0;
+    private int scoreTeamThree = 0;
     private float scoreForRecord;
     private int currentQ = 1;
     private bool answerClicked;
@@ -50,6 +54,7 @@ public class GameScript : MonoBehaviour {
     
    // public string nameTeam1, nameTeam2, nameTeam3;
     public bool numberTeam2, numberTeam3;
+    public bool teamOneRC, teamTwoRC, teamThreeRC;
     public string nameT1, nameT2, nameT3;
 
     private bool trueColor, falseColor,defaultColor;
@@ -73,10 +78,10 @@ public class GameScript : MonoBehaviour {
 
     public void playBttn()
     {
+        BeginTeam.SetActive(false);
         qList = new List<object>(Questions);
         generateQuestion();
         headPanel.GetComponent<Animation>().Play("HeadAnim");
-        score = 0;
         finalText.SetActive(false);
     }
     void generateQuestion()
@@ -135,13 +140,20 @@ public class GameScript : MonoBehaviour {
         else time.GetComponent<Animation>().Play("Bubble_Open_3");
         while (timeCount > -1)
         {
-            if (!answerClicked)
-            {
-                time.text = timeCount.ToString();
-                timeCount--;
-                yield return new WaitForSeconds(1);
-            }
-            else yield break;
+            time.text = timeCount.ToString();
+            timeCount--;
+            yield return new WaitForSeconds(1);
+
+
+            // Ниже в цикле if else решение для викторины со сбрасыванием таймера при правильном ответе
+            /* if (!answerClicked)
+             {
+                 time.text = timeCount.ToString();
+                 timeCount--;
+                 yield return new WaitForSeconds(1);
+             }
+             else yield break;
+             */
         }
         foreach (Button t in answerBttns) t.interactable = false;
         if (!answerClicked) StartCoroutine(timeOut());
@@ -187,7 +199,18 @@ public class GameScript : MonoBehaviour {
         falseColor = false;
         defaultColor = true;
         headPanel.GetComponent<Animation>().Play("HeadAnimOut");
-       // if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score); //Обновление рекорда, дубль для качественной работы, пока не требуется 
+        ij++;
+        if (numberTeam2)
+        {
+            if (ij > 2) ij = 1;
+        }else
+        {
+            if (ij > 3) ij = 1;
+        }
+        
+        BeginTeam.SetActive(false);
+
+        // if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score); //Обновление рекорда, дубль для качественной работы, пока не требуется 
     }
     IEnumerator trueOrFalse(bool check)
     {
@@ -197,12 +220,26 @@ public class GameScript : MonoBehaviour {
         yield return new WaitForSeconds(1);
         if (check)
         {
-            score = score + 1;
-
+           // score = score + 1;
+            switch (ij)
+            {
+                case 1:
+                    scoreTeamOne = scoreTeamOne + 1;
+                    score = scoreTeamOne;
+                    break;
+                case 2:
+                    scoreTeamTwo = scoreTeamTwo + 1;
+                    score = scoreTeamTwo;
+                    break;
+                case 3:
+                    scoreTeamThree = scoreTeamThree + 1;
+                    score = scoreTeamThree;
+                    break;
+            }
             //Интересное решение, которое можно добавить к расширенной версии игры или доп. возможностям
-          /*  score = score + (multiplierScore * currentQ) + (timeCount * multiplierScore); */
+            /*  score = score + (multiplierScore * currentQ) + (timeCount * multiplierScore); */
             //
-           // foreach (Button t in answerBttns) t.GetComponent<Animation>().Play("Bubble_Close_2"); // опять foreach заменяем на for
+            // foreach (Button t in answerBttns) t.GetComponent<Animation>().Play("Bubble_Close_2"); // опять foreach заменяем на for
 
             trueColor = true;
             yield return new WaitForSeconds(0.5f);
@@ -380,16 +417,12 @@ public class GameScript : MonoBehaviour {
 
     }
 
-    public void TeamBuild()
-    {     
-        
-
-    }
 
     public void SaveNameTeamOne()
     {
 
         nameT1 = InputNOT1.text;
+        if (nameT1 == "") nameT1 = "Кусаки";
         Debug.Log(nameT1);
      
     }
@@ -398,6 +431,7 @@ public class GameScript : MonoBehaviour {
     {
 
         nameT2 = InputNOT2.text;
+        if (nameT2 == "") nameT2 = "Чуббаки";
         Debug.Log(nameT2);
 
     }
@@ -406,6 +440,7 @@ public class GameScript : MonoBehaviour {
     {
 
         nameT3 = InputNOT3.text;
+        if (nameT3 == "") nameT3 = "Мураши";
         Debug.Log(nameT3);
 
     }
@@ -415,6 +450,7 @@ public class GameScript : MonoBehaviour {
        
         NameOfTeam1.SetActive(false);
         NameOfTeam2.SetActive(true);
+        if (nameT1 == "") nameT1 = "Кусаки";
     }
     // ПОПРАВИТЬ и прикрутить логику от количества команд
     public void BttnNameOfTeamTwo()
@@ -424,11 +460,14 @@ public class GameScript : MonoBehaviour {
         if (numberTeam2)
         {
             BeginTeam.SetActive(true);
-        }else
+            ij = 1;
+            BeginTeamName();
+        }
+        else
         {
             NameOfTeam3.SetActive(true);
         }
-        
+        if (nameT2 == "") nameT2 = "Чуббаки";
     }
 
     public void BttnNameOfTeamThree()
@@ -436,6 +475,25 @@ public class GameScript : MonoBehaviour {
 
         NameOfTeam3.SetActive(false);
         BeginTeam.SetActive(true);
+        if (nameT3 == "") nameT3 = "Мураши";
+    }
+
+    public void BeginTeamName()
+    {
+
+        switch (ij)
+        {
+            case 1:
+                BeginTeamText.text = "   Ход команды   " + nameT1;
+                break;
+            case 2:
+                BeginTeamText.text = "   Ход команды   " + nameT2;
+                break;
+            case 3:
+                BeginTeamText.text = "   Ход команды   " + nameT3;
+                break;
+        }
+
     }
 
     /* //Скрипт по умному с очищением input
