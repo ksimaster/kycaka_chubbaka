@@ -116,6 +116,7 @@ public class GameScript : MonoBehaviour {
                   */
             }
             StartCoroutine(answersBttnsInAnim());
+            StartCoroutine(timer());
             timeCount = publicTimeCount;
             currentQ++;
         }
@@ -144,21 +145,26 @@ public class GameScript : MonoBehaviour {
         else time.GetComponent<Animation>().Play("Bubble_Open_3");
         while (timeCount > -1)
         {
+            
+            if(answerClicked) yield return new WaitForSeconds(1);
+            
+            if(timeCount>0)
+            {
+            
             time.text = timeCount.ToString();
             timeCount--;
             yield return new WaitForSeconds(1);
-
-
-            // Ниже в цикле if else решение для викторины со сбрасыванием таймера при правильном ответе
-            /* if (!answerClicked)
-             {
-                 time.text = timeCount.ToString();
-                 timeCount--;
-                 yield return new WaitForSeconds(1);
-             }
-             else yield break;
-             */
-        }
+            }else yield break;
+        // Ниже в цикле if else решение для викторины со сбрасыванием таймера при правильном ответе
+        /* if (!answerClicked)
+         {
+             time.text = timeCount.ToString();
+             timeCount--;
+             yield return new WaitForSeconds(1);
+         }
+         else yield break;
+         */
+         } 
         foreach (Button t in answerBttns) t.interactable = false;
         if (!answerClicked) StartCoroutine(timeOut());
     }
@@ -184,7 +190,7 @@ public class GameScript : MonoBehaviour {
         */
         //  foreach (Button t in answerBttns) t.interactable = true; // эта штука перебирает кнопки, а у нас одна...
         answerBttns[0].interactable = true; //убираем и заменяем на одну команду
-        yield return StartCoroutine(timer());
+       // yield return StartCoroutine(timer()); //Данная строчка для запуска таймера в режиме викторины связанная с перезапуском таймера в случае правильного ответа
     }
     IEnumerator timeOut()
     {
