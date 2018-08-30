@@ -41,6 +41,7 @@ public class GameScript : MonoBehaviour {
     public Text recordText;
     public Text scoreText;
     public Text BeginTeamText;
+    public int T;
     public int ij;
     private int timeCount = 20;
     private int score = 0;
@@ -82,14 +83,21 @@ public class GameScript : MonoBehaviour {
 
     public void playBttn()
     {
+        T = publicTimeCount;
+        StartCoroutine(OneSecond());
         BeginTeam.SetActive(false);
         qList = new List<object>(Questions);
         generateQuestion();
+        StartCoroutine(timer());
+        timeCount = publicTimeCount;
+        Debug.Log(T);
         headPanel.GetComponent<Animation>().Play("HeadAnim");
         finalText.SetActive(false);
     }
     void generateQuestion()
     {
+        
+
         if (qList.Count > 0)
         {
             if (scoreText.gameObject.activeSelf) scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
@@ -116,8 +124,8 @@ public class GameScript : MonoBehaviour {
                   */
             }
             StartCoroutine(answersBttnsInAnim());
-            StartCoroutine(timer());
-            timeCount = publicTimeCount;
+            //StartCoroutine(timer()); // было в викторине
+            //  timeCount = publicTimeCount; // было в викторине
             currentQ++;
         }
         else StartCoroutine(final());
@@ -125,7 +133,13 @@ public class GameScript : MonoBehaviour {
     public void answerBttn(int index)
     {
         answerClicked = true;
+        timeCount = T;
         StartCoroutine(trueOrFalse(answersText[index].text == crntQ.answers[0]));
+    }
+    IEnumerator OneSecond()
+    {
+        yield return new WaitForSeconds(1);
+
     }
     IEnumerator final()
     {
@@ -140,6 +154,8 @@ public class GameScript : MonoBehaviour {
     }
     IEnumerator timer()
     {
+        timeCount = T;
+        
         answerClicked = false;
         if (!time.gameObject.activeSelf) time.gameObject.SetActive(true);
         else time.GetComponent<Animation>().Play("Bubble_Open_3");
@@ -148,13 +164,20 @@ public class GameScript : MonoBehaviour {
             
             if(answerClicked) yield return new WaitForSeconds(1);
             
-            if(timeCount>0)
+            if(!answerClicked)
             {
             
             time.text = timeCount.ToString();
             timeCount--;
-            yield return new WaitForSeconds(1);
-            }else yield break;
+             T = timeCount;
+             yield return new WaitForSeconds(1);
+            }
+            else
+            {
+                yield break;
+            }
+
+                
         // Ниже в цикле if else решение для викторины со сбрасыванием таймера при правильном ответе
         /* if (!answerClicked)
          {
@@ -165,8 +188,9 @@ public class GameScript : MonoBehaviour {
          else yield break;
          */
          } 
-        foreach (Button t in answerBttns) t.interactable = false;
-        if (!answerClicked) StartCoroutine(timeOut());
+        //foreach (Button t in answerBttns) t.interactable = false;
+        if (timeCount<0) StartCoroutine(timeOut());
+        
     }
     IEnumerator answersBttnsInAnim()
     {
@@ -194,7 +218,8 @@ public class GameScript : MonoBehaviour {
     }
     IEnumerator timeOut()
     {
-        foreach (Button t in answerBttns) t.GetComponent<Animation>().Play("Bubble_Close_2");
+        //foreach (Button t in answerBttns) t.GetComponent<Animation>().Play("Bubble_Close_2");
+        
         falseColor = true;
         yield return new WaitForSeconds(0.5f);
         if (!answersIcons[2].activeSelf) answersIcons[2].SetActive(true);
@@ -208,7 +233,12 @@ public class GameScript : MonoBehaviour {
         time.GetComponent<Animation>().Play("Bubble_Close_3");
         falseColor = false;
         defaultColor = true;
-        headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+        // headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+        //headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+        answerBttns[0].GetComponent<Animation>().Play("Bubble_Close_2");
+        scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
+        finalText.GetComponent<Animation>().Play("Bubble_Close_3");
+        
         ij++;
         if (numberTeam2)
         {
@@ -217,8 +247,13 @@ public class GameScript : MonoBehaviour {
         {
             if (ij > 3) ij = 1;
         }
-        
-        BeginTeam.SetActive(false);
+        Debug.Log(score);
+        Debug.Log(scoreTeamOne);
+        Debug.Log(scoreTeamTwo);
+        Debug.Log(scoreTeamThree);
+        Debug.Log(T);
+        BeginTeamName();
+        BeginTeam.SetActive(true);
 
         // if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score); //Обновление рекорда, дубль для качественной работы, пока не требуется 
     }
@@ -256,7 +291,7 @@ public class GameScript : MonoBehaviour {
             if (!answersIcons[0].activeSelf) answersIcons[0].SetActive(true);
             else answersIcons[0].GetComponent<Animation>().Play("Bubble_Open_3");
             questionText.GetComponent<Animation>().Play("Bubble_Close_1");
-            yield return new WaitForSeconds(0.5f);
+           yield return new WaitForSeconds(0.5f);
             time.GetComponent<Animation>().Play("Bubble_Close_3");
             qList.RemoveAt(randQ);
             if (!scoreText.gameObject.activeSelf) scoreText.gameObject.SetActive(true);
@@ -266,6 +301,7 @@ public class GameScript : MonoBehaviour {
             trueColor = false;
             defaultColor = true;
             generateQuestion();
+            StartCoroutine(timer());
         }
         else
         {
