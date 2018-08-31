@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class GameScript : MonoBehaviour {
@@ -77,8 +78,8 @@ public class GameScript : MonoBehaviour {
         else if (falseColor) headPanel.color = Color.Lerp(headPanel.color, falseCC, 8 * Time.deltaTime);
 
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !PausePanel.activeSelf) { PausePanel.SetActive(true); Time.timeScale = 0; }
-        else if (Input.GetKeyDown(KeyCode.Escape) && PausePanel.activeSelf) { PausePanel.SetActive(false); Time.timeScale = 1; }
+        if (Input.GetKeyDown(KeyCode.Escape) && !PausePanel.activeSelf) { PausePanel.SetActive(true);  }
+        else if (Input.GetKeyDown(KeyCode.Escape) && PausePanel.activeSelf) { PausePanel.SetActive(false); }
     }
 
     public void playBttn()
@@ -421,20 +422,42 @@ public class GameScript : MonoBehaviour {
 
 
 
-    public void ReturneMainMenu()
+    public void ReturnePausePanel()
 
 
     {
 
-        NumberOfTeam.SetActive(false);
-        PausePanel.SetActive(false);
-        headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+
+        PausePanel.SetActive(true);
 
 
 
 
 
     }
+
+
+    public void ReturneMainMenu()
+
+
+    {
+
+
+        //Application.LoadLevel("Game");
+        // Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        // NumberOfTeam.SetActive(false);
+        //  PausePanel.SetActive(false);
+        //  headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+
+
+
+
+
+    }
+
+
 
     public void PusePan(int bttn)
     {
