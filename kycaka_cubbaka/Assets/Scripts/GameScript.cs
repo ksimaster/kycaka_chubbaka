@@ -5,6 +5,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
+
 public class GameScript : MonoBehaviour {
 
     [HideInInspector]
@@ -35,6 +36,14 @@ public class GameScript : MonoBehaviour {
     public GameObject NameOfTeam2;
     public GameObject NameOfTeam3;
     public GameObject BeginTeam;
+    //Объявление листа статистики
+    public GameObject StatList;
+    public Text StatNameOne;
+    public Text ScoreTeamOne;
+    public Text StatNameTwo;
+    public Text ScoreTeamTwo;
+    public Text StatNameThree;
+    public Text ScoreTeamThree;
     public InputField InputNOT1;
     public InputField InputNOT2;
     public InputField InputNOT3;
@@ -68,6 +77,11 @@ public class GameScript : MonoBehaviour {
     private List<object> qList;
     private QuestionsList crntQ;
 
+    private void Start()
+    {
+        qList = new List<object>(Questions);
+    }
+
     void Update ()
     {
         scoreText.text = string.Format("Ваш счёт: {0:0}", score);
@@ -87,7 +101,7 @@ public class GameScript : MonoBehaviour {
         T = publicTimeCount;
         StartCoroutine(OneSecond());
         BeginTeam.SetActive(false);
-        qList = new List<object>(Questions);
+       // qList = new List<object>(Questions); // если требуется генерить лист каждый раз
         generateQuestion();
         StartCoroutine(timer());
         timeCount = publicTimeCount;
@@ -103,7 +117,7 @@ public class GameScript : MonoBehaviour {
         {
             if (scoreText.gameObject.activeSelf) scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
            // randQ = Random.Range(0, qList.Count); //в случае викторины от 2х и выше
-            randQ = 0; // в случае одного ответа
+            randQ = 1; // 0 - отсутствует перемешка
             crntQ = qList[randQ] as QuestionsList;
             if (crntQ != null)
             {
@@ -144,13 +158,16 @@ public class GameScript : MonoBehaviour {
     }
     IEnumerator final()
     {
-        finalText.SetActive(true);
+       // finalText.SetActive(true);
+
+        //ВНИМАНИЕ! Здесь должна быть выскакивающая панелька о том, что игра закончена
         yield return new WaitForSeconds(2);
-        trueColor = false;
-        defaultColor = true;
-        headPanel.GetComponent<Animation>().Play("HeadAnimOut");
-        scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
-        finalText.GetComponent<Animation>().Play("Bubble_Close_3");
+        BttnGoStat();
+       // trueColor = false;
+       // defaultColor = true;
+        //headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+       // scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
+       // finalText.GetComponent<Animation>().Play("Bubble_Close_3");
        // if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score); //Обновляет рекорд, у нас как дополнение при максимальной серии угадываний игроком
     }
     IEnumerator timer()
@@ -239,7 +256,13 @@ public class GameScript : MonoBehaviour {
         answerBttns[0].GetComponent<Animation>().Play("Bubble_Close_2");
         scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
         finalText.GetComponent<Animation>().Play("Bubble_Close_3");
-        
+        //Для того чтобы отключилась панелька c истекшим временем пишем 2 строчки
+        if (answersIcons[2].activeSelf) answersIcons[2].SetActive(false);
+        else answersIcons[2].GetComponent<Animation>().Play("Bubble_Close_3");
+        //Для того чтобы отключилась панель с очками пишем 2 строчки
+        if (scoreText.gameObject.activeSelf) scoreText.gameObject.SetActive(false);
+        else scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
+        //далее смена команд в зависимости от их количества
         ij++;
         if (numberTeam2)
         {
@@ -497,7 +520,7 @@ public class GameScript : MonoBehaviour {
         else { exitPanel.SetActive(false); Time.timeScale = 1; ;
             headPanel.GetComponent<Animation>().Play("HeadAnimOut"); }
     }
-
+    //Выбор команды
     public void ChooseNumberOfTeam()
     {
         NumberOfTeam.SetActive(true);
@@ -505,11 +528,42 @@ public class GameScript : MonoBehaviour {
         
 
     }
-
+    // Начинается раздел статистики, StatList
     public void StatTable()
     {
+        StatList.SetActive(true);
+        StatNameOne.text = nameT1;
+        ScoreTeamOne.text = scoreTeamOne.ToString();
+        StatNameTwo.text = nameT2;
+        ScoreTeamTwo.text = scoreTeamTwo.ToString();
+        if (numberTeam2)
+        {
 
+            StatNameThree.text = "";
+            ScoreTeamThree.text = "";
+        }else
+        {
+            StatNameThree.text = nameT3;
+            ScoreTeamThree.text = scoreTeamThree.ToString();
 
+        }
+
+    }
+
+    public void BttnGoStat()
+    {
+            
+        BeginTeam.SetActive(false);
+        StatList.SetActive(true);
+        StatTable();
+       
+    }
+
+    public void BttnGoBeginTeam()
+    {
+        StatList.SetActive(false);
+        BeginTeam.SetActive(true);
+        
     }
 
 
@@ -569,6 +623,7 @@ public class GameScript : MonoBehaviour {
     {
 
         NameOfTeam3.SetActive(false);
+        BeginTeamName();
         BeginTeam.SetActive(true);
         if (nameT3 == "") nameT3 = "Мураши";
     }
@@ -728,9 +783,10 @@ NameOfTeam.SetActive(false);
 
     public void BttnThreeTeam()
     {
+        NumberOfTeam.SetActive(false);
         numberTeam2 = false;
         numberTeam3 = true;
-        //далее включение анимации для наименования команд
+        //далее включение панели для наименования команд
         ij = 1;
         NameOfTeam1.SetActive(true);
 
