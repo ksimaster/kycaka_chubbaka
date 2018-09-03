@@ -39,6 +39,7 @@ public class GameScript : MonoBehaviour {
     public GameObject PlayBttn;
     public GameObject RulsBttn;
     public GameObject ExitBttn;
+    public GameObject ComeBackGameBttn;
     //Объявление листа статистики
     public GameObject StatList;
     public Text StatNameOne;
@@ -161,11 +162,39 @@ public class GameScript : MonoBehaviour {
     }
     IEnumerator final()
     {
-       // finalText.SetActive(true);
+        // finalText.SetActive(true);
 
         //ВНИМАНИЕ! Здесь должна быть выскакивающая панелька о том, что игра закончена
+        //перенесено из тайм аута
+        falseColor = true;
+        yield return new WaitForSeconds(0.5f);
+        if (!answersIcons[2].activeSelf) answersIcons[2].SetActive(true);
+        else answersIcons[2].GetComponent<Animation>().Play("Bubble_Open_3");
+        questionText.GetComponent<Animation>().Play("Bubble_Close_1");
+        yield return new WaitForSeconds(0.5f);
+        if (!scoreText.gameObject.activeSelf) scoreText.gameObject.SetActive(true);
+        else scoreText.GetComponent<Animation>().Play("Bubble_Open_3");
+        yield return new WaitForSeconds(2);
+        answersIcons[2].GetComponent<Animation>().Play("Bubble_Close_3");
+        time.GetComponent<Animation>().Play("Bubble_Close_3");
+        falseColor = false;
+        defaultColor = true;
+        // headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+        //headPanel.GetComponent<Animation>().Play("HeadAnimOut");
+        answerBttns[0].GetComponent<Animation>().Play("Bubble_Close_2");
+        scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
+        finalText.GetComponent<Animation>().Play("Bubble_Close_3");
+        //Для того чтобы отключилась панелька c истекшим временем пишем 2 строчки
+        if (answersIcons[2].activeSelf) answersIcons[2].SetActive(false);
+        else answersIcons[2].GetComponent<Animation>().Play("Bubble_Close_3");
+        //Для того чтобы отключилась панель с очками пишем 2 строчки
+        if (scoreText.gameObject.activeSelf) scoreText.gameObject.SetActive(false);
+        else scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
+        // 
+
         yield return new WaitForSeconds(2);
         BttnGoStat();
+        ComeBackGameBttn.SetActive(false);
        // trueColor = false;
        // defaultColor = true;
         //headPanel.GetComponent<Animation>().Play("HeadAnimOut");
