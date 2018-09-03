@@ -36,6 +36,9 @@ public class GameScript : MonoBehaviour {
     public GameObject NameOfTeam2;
     public GameObject NameOfTeam3;
     public GameObject BeginTeam;
+    public GameObject PlayBttn;
+    public GameObject RulsBttn;
+    public GameObject ExitBttn;
     //Объявление листа статистики
     public GameObject StatList;
     public Text StatNameOne;
@@ -106,7 +109,7 @@ public class GameScript : MonoBehaviour {
         StartCoroutine(timer());
         timeCount = publicTimeCount;
         Debug.Log(T);
-        headPanel.GetComponent<Animation>().Play("HeadAnim");
+       // headPanel.GetComponent<Animation>().Play("HeadAnim"); // убрал, так как лишняя анимация
         finalText.SetActive(false);
     }
     void generateQuestion()
@@ -354,9 +357,10 @@ public class GameScript : MonoBehaviour {
     public void ShowRulstBttn()
     {
 
-
-
-       RulsPanel.SetActive(true);
+        RulsBttn.SetActive(false);  
+        PlayBttn.SetActive(false);
+        ExitBttn.SetActive(false);
+        RulsPanel.SetActive(true);
         headPanel.GetComponent<Animation>().Play("HeadAnim");
 
 
@@ -421,7 +425,7 @@ public class GameScript : MonoBehaviour {
     public void ShowRulstexit()
     {
 
-
+       
         RulsPanel_2.SetActive(false);
 
         headPanel.GetComponent<Animation>().Play("HeadAnimOut");
@@ -431,6 +435,11 @@ public class GameScript : MonoBehaviour {
 
     public void RulstPan(int bttn)
     {
+        RulsBttn.SetActive(true);
+        PlayBttn.SetActive(true);
+        ExitBttn.SetActive(true);
+
+
         if (bttn == 0)
         {
             if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score);
@@ -503,7 +512,9 @@ public class GameScript : MonoBehaviour {
     {
 
 
-
+        RulsBttn.SetActive(false);
+        PlayBttn.SetActive(false);
+        ExitBttn.SetActive(false);
         exitPanel.SetActive(true);
         headPanel.GetComponent<Animation>().Play("HeadAnim");
 
@@ -519,13 +530,19 @@ public class GameScript : MonoBehaviour {
         }
         else { exitPanel.SetActive(false); Time.timeScale = 1; ;
             headPanel.GetComponent<Animation>().Play("HeadAnimOut"); }
+        RulsBttn.SetActive(true);
+        PlayBttn.SetActive(true);
+        ExitBttn.SetActive(true);
     }
     //Выбор команды
     public void ChooseNumberOfTeam()
     {
         NumberOfTeam.SetActive(true);
         headPanel.GetComponent<Animation>().Play("HeadAnim");
-        
+        RulsBttn.SetActive(false);
+        PlayBttn.SetActive(false);
+        ExitBttn.SetActive(false);
+
 
     }
     // Начинается раздел статистики, StatList
