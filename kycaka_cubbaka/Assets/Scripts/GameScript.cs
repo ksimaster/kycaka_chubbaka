@@ -39,7 +39,9 @@ public class GameScript : MonoBehaviour {
     public GameObject PlayBttn;
     public GameObject RulsBttn;
     public GameObject ExitBttn;
+    public GameObject PauseOnBttn;
     public GameObject ComeBackGameBttn;
+    public GameObject AudioMan;
     //Объявление листа статистики
     public GameObject StatList;
     public Text StatNameOne;
@@ -96,8 +98,21 @@ public class GameScript : MonoBehaviour {
         else if (falseColor) headPanel.color = Color.Lerp(headPanel.color, falseCC, 8 * Time.deltaTime);
 
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !PausePanel.activeSelf) { PausePanel.SetActive(true);  }
-        else if (Input.GetKeyDown(KeyCode.Escape) && PausePanel.activeSelf) { PausePanel.SetActive(false); }
+        if (Input.GetKeyDown(KeyCode.Escape) && !PausePanel.activeSelf)
+        {
+            PausePanel.SetActive(true);
+            Time.timeScale = 0;
+            //Отключение тикания
+            if (AudioMan.activeSelf) AudioMan.SetActive(false);
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && PausePanel.activeSelf)
+        {
+            PausePanel.SetActive(false);
+            Time.timeScale = 1;
+            //включение тикания
+            if (!AudioMan.activeSelf && open_audio.activeSelf && T>0 && T<7) AudioMan.SetActive(true);
+        }
     }
 
     public void playBttn()
@@ -167,6 +182,8 @@ public class GameScript : MonoBehaviour {
         //ВНИМАНИЕ! Здесь должна быть выскакивающая панелька о том, что игра закончена
         //перенесено из тайм аута
         falseColor = true;
+        //Отключение тикания
+        if (AudioMan.activeSelf) AudioMan.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         if (!answersIcons[2].activeSelf) answersIcons[2].SetActive(true);
         else answersIcons[2].GetComponent<Animation>().Play("Bubble_Open_3");
@@ -195,12 +212,15 @@ public class GameScript : MonoBehaviour {
         yield return new WaitForSeconds(2);
         BttnGoStat();
         ComeBackGameBttn.SetActive(false);
-       // trueColor = false;
-       // defaultColor = true;
+        PauseOnBttn.SetActive(false);
+        
+        
+        // trueColor = false;
+        // defaultColor = true;
         //headPanel.GetComponent<Animation>().Play("HeadAnimOut");
-       // scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
-       // finalText.GetComponent<Animation>().Play("Bubble_Close_3");
-       // if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score); //Обновляет рекорд, у нас как дополнение при максимальной серии угадываний игроком
+        // scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
+        // finalText.GetComponent<Animation>().Play("Bubble_Close_3");
+        // if (score > PlayerPrefs.GetInt("score")) PlayerPrefs.SetInt("score", score); //Обновляет рекорд, у нас как дополнение при максимальной серии угадываний игроком
     }
     IEnumerator timer()
     {
@@ -220,6 +240,11 @@ public class GameScript : MonoBehaviour {
             time.text = timeCount.ToString();
             timeCount--;
              T = timeCount;
+                //включение тикания
+                if(T==7 && open_audio.activeSelf)
+                {
+                    AudioMan.SetActive(true);
+                }
              yield return new WaitForSeconds(1);
             }
             else
@@ -264,13 +289,17 @@ public class GameScript : MonoBehaviour {
         */
         //  foreach (Button t in answerBttns) t.interactable = true; // эта штука перебирает кнопки, а у нас одна...
         answerBttns[0].interactable = true; //убираем и заменяем на одну команду
-       // yield return StartCoroutine(timer()); //Данная строчка для запуска таймера в режиме викторины связанная с перезапуском таймера в случае правильного ответа
+        yield return new WaitForSeconds(0.5f);
+        PauseOnBttn.SetActive(true);
+        // yield return StartCoroutine(timer()); //Данная строчка для запуска таймера в режиме викторины связанная с перезапуском таймера в случае правильного ответа
     }
     IEnumerator timeOut()
     {
         //foreach (Button t in answerBttns) t.GetComponent<Animation>().Play("Bubble_Close_2");
         
         falseColor = true;
+        //отключение тикания
+        if (AudioMan.activeSelf) AudioMan.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         if (!answersIcons[2].activeSelf) answersIcons[2].SetActive(true);
         else answersIcons[2].GetComponent<Animation>().Play("Bubble_Open_3");
@@ -288,6 +317,8 @@ public class GameScript : MonoBehaviour {
         answerBttns[0].GetComponent<Animation>().Play("Bubble_Close_2");
         scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
         finalText.GetComponent<Animation>().Play("Bubble_Close_3");
+        PauseOnBttn.SetActive(false);
+        
         //Для того чтобы отключилась панелька c истекшим временем пишем 2 строчки
         if (answersIcons[2].activeSelf) answersIcons[2].SetActive(false);
         else answersIcons[2].GetComponent<Animation>().Play("Bubble_Close_3");
@@ -381,6 +412,18 @@ public class GameScript : MonoBehaviour {
             yield return new WaitForSeconds(1.5f);
             scoreText.gameObject.SetActive(false);
         }
+    }
+
+    public void PauseOnGameBttn()
+    {
+        if (!PausePanel.activeSelf)
+        {
+            if (AudioMan.activeSelf) AudioMan.SetActive(false);
+            PausePanel.SetActive(true);
+            Time.timeScale = 0;
+        }
+        
+
     }
 
     public void ShowRulstBttn()
@@ -484,17 +527,9 @@ public class GameScript : MonoBehaviour {
 
 
     public void ReturnePausePanel()
-
-
     {
-
-
         PausePanel.SetActive(true);
-
-
-
-
-
+        
     }
 
 
@@ -502,8 +537,6 @@ public class GameScript : MonoBehaviour {
 
 
     {
-
-
         //Application.LoadLevel("Game");
         // Application.LoadLevel(Application.loadedLevel);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -511,11 +544,6 @@ public class GameScript : MonoBehaviour {
         // NumberOfTeam.SetActive(false);
         //  PausePanel.SetActive(false);
         //  headPanel.GetComponent<Animation>().Play("HeadAnimOut");
-
-
-
-
-
     }
 
 
@@ -529,8 +557,9 @@ public class GameScript : MonoBehaviour {
         }
         else
         {
-            PausePanel.SetActive(false); Time.timeScale = 1; ;
-          
+            PausePanel.SetActive(false);
+            Time.timeScale = 1; ;
+            if (!AudioMan.activeSelf && open_audio.activeSelf && T > 0 && T < 7) AudioMan.SetActive(true);
         }
     }
 
