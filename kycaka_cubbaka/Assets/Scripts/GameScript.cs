@@ -446,8 +446,8 @@ public class GameScript : MonoBehaviour {
   
             PausePanelBattn.SetActive(false);
             PauseBttn_on.SetActive(true);
-        Time.timeScale = 1;
-        
+            Time.timeScale = 1;
+            if (!AudioMan.activeSelf && open_audio.activeSelf && T > 0 && T < 7) AudioMan.SetActive(true);
 
 
     }
