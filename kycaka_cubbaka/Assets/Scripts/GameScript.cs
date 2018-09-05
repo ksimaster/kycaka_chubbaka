@@ -29,9 +29,11 @@ public class GameScript : MonoBehaviour {
     public GameObject Audio_on_off;
     public GameObject Audio_on_off_1;
     public GameObject RulsPanel_2;
+    public GameObject PausePanelBattn;
     public GameObject PausePanel;
     public GameObject finalText;
     public GameObject NumberOfTeam;
+    public GameObject PauseBttn_on;
     public GameObject NameOfTeam1;
     public GameObject NameOfTeam2;
     public GameObject NameOfTeam3;
@@ -426,6 +428,32 @@ public class GameScript : MonoBehaviour {
 
     }
 
+    public void PauseOnGameBttn_1()
+    {
+        if (!PausePanelBattn.activeSelf)
+        {
+            if (AudioMan.activeSelf) AudioMan.SetActive(false);
+            PausePanelBattn.SetActive(true);
+            PauseBttn_on.SetActive(false);
+            Time.timeScale = 0;
+        }
+
+
+    }
+
+    public void PauseOnGameBttn_2()
+    {
+  
+            PausePanelBattn.SetActive(false);
+            PauseBttn_on.SetActive(true);
+        Time.timeScale = 1;
+        
+
+
+    }
+
+
+
     public void ShowRulstBttn()
     {
 
@@ -534,13 +562,13 @@ public class GameScript : MonoBehaviour {
 
 
     public void ReturneMainMenu()
-
+       
 
     {
         //Application.LoadLevel("Game");
         // Application.LoadLevel(Application.loadedLevel);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+        Time.timeScale = 1;  // e,bhftn jib,re yfkj;tybq
         // NumberOfTeam.SetActive(false);
         //  PausePanel.SetActive(false);
         //  headPanel.GetComponent<Animation>().Play("HeadAnimOut");
@@ -603,6 +631,7 @@ public class GameScript : MonoBehaviour {
 
 
     }
+
     // Начинается раздел статистики, StatList
     public void StatTable()
     {
