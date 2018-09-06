@@ -32,6 +32,8 @@ public class GameScript : MonoBehaviour {
     public GameObject PausePanelBattn;
     public GameObject PausePanel;
     public GameObject finalText;
+    public GameObject ExitPanelMainMenu;
+    public GameObject ExitPanelExit;
     public GameObject NumberOfTeam;
     public GameObject PauseBttn_on;
     public GameObject NameOfTeam1;
@@ -501,6 +503,44 @@ public class GameScript : MonoBehaviour {
 
 
     }
+
+
+    public void ExitMainMenu_1()
+
+    {
+
+        PausePanel.SetActive(false);
+        ExitPanelMainMenu.SetActive(true);
+
+    }
+    public void ExitMainMenu_2()
+
+    {
+
+        PausePanel.SetActive(true);
+        ExitPanelMainMenu.SetActive(false);
+
+    }
+
+
+
+    public void ExitMainMenu_3()
+
+    {
+
+        PausePanel.SetActive(false);
+        ExitPanelExit.SetActive(true);
+
+    }
+    public void ExitMainMenu_4()
+
+    {
+
+        PausePanel.SetActive(true);
+        ExitPanelExit.SetActive(false);
+
+    }
+
 
 
 
