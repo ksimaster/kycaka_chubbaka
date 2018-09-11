@@ -140,7 +140,8 @@ public class GameScript : MonoBehaviour {
         {
             if (scoreText.gameObject.activeSelf) scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
            // randQ = Random.Range(0, qList.Count); //в случае викторины от 2х и выше
-            randQ = 1; // 0 - отсутствует перемешка
+            //randQ = 246; // 0 - отсутствует перемешка
+            randQ = Random.Range(0, qList.Count);
             crntQ = qList[randQ] as QuestionsList;
             if (crntQ != null)
             {
