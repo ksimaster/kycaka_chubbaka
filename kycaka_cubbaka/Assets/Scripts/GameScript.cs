@@ -21,6 +21,7 @@ public class GameScript : MonoBehaviour {
     public Button[] answerBttns = new Button[1]; // numbers Button, количество кнопок
     public Text[] answersText = new Text[1]; // numbers text in the button, тексты для кнопок (равны количеству кнопок)
     public GameObject[] answersIcons; // 0 - trueIcon; 1 - falseIcon;
+    public int[] randQList; 
     public Image headPanel;
     public GameObject exitPanel;
     public GameObject RulsPanel;
@@ -90,7 +91,9 @@ public class GameScript : MonoBehaviour {
     private void Start()
     {
         qList = new List<object>(Questions);
-    }
+        randQList = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        Debug.Log(randQList.Length);
+}
 
     void Update ()
     {
@@ -139,9 +142,34 @@ public class GameScript : MonoBehaviour {
         if (qList.Count > 0)
         {
             if (scoreText.gameObject.activeSelf) scoreText.GetComponent<Animation>().Play("Bubble_Close_3");
-           // randQ = Random.Range(0, qList.Count); //в случае викторины от 2х и выше
+            // randQ = Random.Range(0, qList.Count); //в случае викторины от 2х и выше
             //randQ = 246; // 0 - отсутствует перемешка
+            //рандомизация вопроса
+            Debug.Log(randQList[1]);
             randQ = Random.Range(0, qList.Count);
+            Debug.Log(randQ);
+            if (randQList[0] == 0) randQList[0] = randQ;
+            // проверка был ли такой randQ сделано через for и if, можно через switch
+            for (int jj=0; jj<=randQList.Length; jj++)
+            {
+                Debug.Log(randQList[jj]);
+                if (randQList[jj]==randQ)
+                {
+                    randQ = Random.Range(0, qList.Count);
+                    // добавляем в массив новый randQ
+                    for (int ii = 1; ii <= randQList.Length; ii++)
+                    {
+                        if (randQList[ii] == 0) randQList[ii] = randQ;
+                        if (randQList[ii] == randQ) break;
+                    }
+                    if (randQList[jj] == randQ) break;
+
+
+                }
+                if (randQList[jj] == randQ) break;
+            }
+           
+            
             crntQ = qList[randQ] as QuestionsList;
             if (crntQ != null)
             {
