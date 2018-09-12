@@ -91,7 +91,8 @@ public class GameScript : MonoBehaviour {
     private void Start()
     {
         qList = new List<object>(Questions);
-        randQList = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+ 
+        randQList = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, - 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
         Debug.Log(randQList.Length);
 }
 
@@ -145,31 +146,34 @@ public class GameScript : MonoBehaviour {
             // randQ = Random.Range(0, qList.Count); //в случае викторины от 2х и выше
             //randQ = 246; // 0 - отсутствует перемешка
             //рандомизация вопроса
-            Debug.Log(randQList[1]);
+           // Debug.Log("Первый из randQList" + randQList[1]);
             randQ = Random.Range(0, qList.Count);
-            Debug.Log(randQ);
-            if (randQList[0] == 0) randQList[0] = randQ;
+            Debug.Log("После новой рандомизации: " + randQ);
+            if (randQList[0] == -1) randQList[0] = randQ;
             // проверка был ли такой randQ сделано через for и if, можно через switch
-            for (int jj=0; jj<=randQList.Length; jj++)
+            for (int jj=0; jj<randQList.Length; jj++)
             {
                 Debug.Log(randQList[jj]);
                 if (randQList[jj]==randQ)
                 {
                     randQ = Random.Range(0, qList.Count);
                     // добавляем в массив новый randQ
-                    for (int ii = 1; ii <= randQList.Length; ii++)
+                    for (int ii = 1; ii < randQList.Length; ii++)
                     {
-                        if (randQList[ii] == 0) randQList[ii] = randQ;
-                        if (randQList[ii] == randQ) break;
+                        if (randQList[ii] == -1)
+                        { 
+                            randQList[ii] = randQ;
+                            goto link1;
+                        }
                     }
-                    if (randQList[jj] == randQ) break;
+                    
 
 
                 }
-                if (randQList[jj] == randQ) break;
+                
             }
            
-            
+            link1:
             crntQ = qList[randQ] as QuestionsList;
             if (crntQ != null)
             {
