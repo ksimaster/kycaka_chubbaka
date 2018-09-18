@@ -64,8 +64,8 @@ public class QuizEditor : Editor
         EditorGUILayout.Space();
         EditorGUILayout.HelpBox("В группе ВК вы можете получить помощь, если у вас что-то не получается.", MessageType.Info);
         EditorGUILayout.BeginHorizontal("box");
-        if (GUILayout.Button("Перейти на Youtube канал")) Application.OpenURL("https://www.youtube.com/channel/UCfkGzBtY86U5Y8kmbEuiNIA");
-        if (GUILayout.Button("Перейти в группу ВКонтакте")) Application.OpenURL("https://vk.com/youtube_androidhelper");
+        //if (GUILayout.Button("Перейти на Youtube канал")) Application.OpenURL("https://www.youtube.com/channel/UCfkGzBtY86U5Y8kmbEuiNIA");
+       // if (GUILayout.Button("Перейти в группу ВКонтакте")) Application.OpenURL("https://vk.com/youtube_androidhelper");
         EditorGUILayout.EndHorizontal();
         if (GUI.changed) EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         Repaint();
