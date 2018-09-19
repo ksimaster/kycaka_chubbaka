@@ -337,16 +337,20 @@ public class GameScript : MonoBehaviour {
         falseColor = true;
         //отключение тикания
         if (AudioMan.activeSelf) AudioMan.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
+        answerBttns[0].interactable = false;
+        //answerBttns[0].GetComponent<Animation>().Play("Bubble_Close_2");
+        yield return new WaitForSeconds(0.7f);
         if (!answersIcons[2].activeSelf) answersIcons[2].SetActive(true);
         else answersIcons[2].GetComponent<Animation>().Play("Bubble_Open_3");
+        yield return new WaitForSeconds(0.7f);
         questionText.GetComponent<Animation>().Play("Bubble_Close_1");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         if (!scoreText.gameObject.activeSelf) scoreText.gameObject.SetActive(true);
         else scoreText.GetComponent<Animation>().Play("Bubble_Open_3");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.2f);
         answersIcons[2].GetComponent<Animation>().Play("Bubble_Close_3");
         time.GetComponent<Animation>().Play("Bubble_Close_3");
+       // yield return new WaitForSeconds(0.5f);
         falseColor = false;
         defaultColor = true;
         // headPanel.GetComponent<Animation>().Play("HeadAnimOut");
@@ -386,6 +390,7 @@ public class GameScript : MonoBehaviour {
         defaultColor = false;
        // foreach (Button t in answerBttns) t.interactable = false; // опять foreach заменяем на обычную, в отличие от викторины на 3 ответа
         answerBttns[0].interactable = false;
+        // по умолчанию следующее значение в скобках было равно 1
         yield return new WaitForSeconds(1);
         if (check)
         {
