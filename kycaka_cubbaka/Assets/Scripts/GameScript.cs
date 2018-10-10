@@ -23,6 +23,7 @@ public class GameScript : MonoBehaviour {
     public GameObject[] answersIcons; // 0 - trueIcon; 1 - falseIcon;
     public int[] randQList; 
     public Image headPanel;
+    public GameObject HeadAllPanel;
     public GameObject exitPanel;
     public GameObject RulsPanel;
     public GameObject open_audio;
@@ -81,6 +82,9 @@ public class GameScript : MonoBehaviour {
    // public string nameTeam1, nameTeam2, nameTeam3;
     public bool numberTeam2, numberTeam3;
     public bool teamOneRC, teamTwoRC, teamThreeRC;
+    //переменные, определяющие воздействие паузы на соответствующие панели
+    public bool StatOnOff, RulsOnOff, NumberOfTeamOnOff, NameOfTeam1OnOff, NameOfTeam2OnOff, NameOfTeam3OnOff, BeginTeamOnOff;
+  //  public bool HeadAllPanelOnOff;
     public string nameT1, nameT2, nameT3;
 
     private bool trueColor, falseColor,defaultColor;
@@ -94,6 +98,15 @@ public class GameScript : MonoBehaviour {
  
         randQList = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, - 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
         Debug.Log(randQList.Length);
+        StatOnOff = true;
+        RulsOnOff = true;
+        NumberOfTeamOnOff = true;
+        NameOfTeam1OnOff = true;
+        NameOfTeam2OnOff = true;
+        NameOfTeam3OnOff = true;
+        BeginTeamOnOff = true;
+        //HeadAllPanelOnOff = true;
+
 }
 
     void Update ()
@@ -112,14 +125,118 @@ public class GameScript : MonoBehaviour {
             Time.timeScale = 0;
             //Отключение тикания
             if (AudioMan.activeSelf) AudioMan.SetActive(false);
+            //Отключаем панель статов, если она включена
+            if (StatList.activeSelf)
+            { 
+                StatList.SetActive(false);
+                StatOnOff = false;
+            }
+            //Отключаем панель правил, если она включена
+            if (RulsPanel.activeSelf)
+            {
+                RulsPanel.SetActive(false);
+                RulsOnOff = false;
+            }
+            //Отключаем панель выбора количества команд, если она включена
+            if (NumberOfTeam.activeSelf)
+            {
+                NumberOfTeam.SetActive(false);
+                NumberOfTeamOnOff = false;
+            }
 
+            //Отключаем панель ввода первой команды, если она включена
+            if (NameOfTeam1.activeSelf)
+            {
+                NameOfTeam1.SetActive(false);
+                NameOfTeam1OnOff = false;
+            }
+
+            //Отключаем панель ввода второй команды, если она включена
+            if (NameOfTeam2.activeSelf)
+            {
+                NameOfTeam2.SetActive(false);
+                NameOfTeam2OnOff = false;
+            }
+
+            //Отключаем панель ввода третьей команды, если она включена
+            if (NameOfTeam3.activeSelf)
+            {
+                NameOfTeam3.SetActive(false);
+                NameOfTeam3OnOff = false;
+            }
+            
+            //Отключаем панель начинает команда, если она включена
+            if (BeginTeam.activeSelf)
+            {
+                BeginTeam.SetActive(false);
+                BeginTeamOnOff = false;
+            }
+/*
+            //Отключаем панель основной игры (раунда), если она включена
+            if (HeadAllPanel.activeSelf)
+            {
+                HeadAllPanel.SetActive(false);
+                HeadAllPanelOnOff = false;
+            }
+            */
         }
+
         else if (Input.GetKeyDown(KeyCode.Escape) && PausePanel.activeSelf)
         {
             PausePanel.SetActive(false);
             Time.timeScale = 1;
             //включение тикания
             if (!AudioMan.activeSelf && open_audio.activeSelf && T>0 && T<7) AudioMan.SetActive(true);
+            //включаем панель статов, если пауза её отключала
+            if (!StatOnOff&&!StatList.activeSelf)
+            { 
+                StatList.SetActive(true);
+                StatOnOff = true;
+            }
+            //включаем панель правил, если пауза её отключала
+            if (!RulsOnOff && !RulsPanel.activeSelf)
+            { 
+                RulsPanel.SetActive(true);
+                RulsOnOff = true;
+            }
+            //включаем панель выбора количества команд, если пауза её отключала
+            if (!NumberOfTeamOnOff && !NumberOfTeam.activeSelf)
+            { 
+                NumberOfTeam.SetActive(true);
+                NumberOfTeamOnOff = true;
+            }
+            //включаем панель ввода первой команды, если пауза её отключала
+            if (!NameOfTeam1OnOff && !NameOfTeam1.activeSelf)
+            { 
+                NameOfTeam1.SetActive(true);
+                NameOfTeam1OnOff = true;
+            }
+            //включаем панель ввода второй команды, если пауза её отключала
+            if (!NameOfTeam2OnOff && !NameOfTeam2.activeSelf)
+            { 
+                NameOfTeam2.SetActive(true);
+                NameOfTeam2OnOff = true;
+            }
+            //включаем панель ввода третьей команды, если пауза её отключала
+            if (!NameOfTeam3OnOff && !NameOfTeam3.activeSelf)
+            { 
+                NameOfTeam3.SetActive(true);
+                NameOfTeam3OnOff = true;
+            }
+            //включаем панель начинает команда, если пауза её отключала
+            if (!BeginTeamOnOff && !BeginTeam.activeSelf)
+            {
+                BeginTeam.SetActive(true);
+                BeginTeamOnOff = true;
+            }
+          /* 
+            //включаем панель основной игры (раунда), если пауза её отключала
+            if (!HeadAllPanelOnOff && !HeadAllPanel.activeSelf)
+            {
+                HeadAllPanel.SetActive(true);
+                HeadAllPanelOnOff = true;
+            }
+            */
         }
     }
 
