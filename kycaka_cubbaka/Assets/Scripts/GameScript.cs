@@ -119,7 +119,7 @@ public class GameScript : MonoBehaviour {
         else if (falseColor) headPanel.color = Color.Lerp(headPanel.color, falseCC, 8 * Time.deltaTime);
 
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !PausePanel.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) && !PausePanel.activeSelf && !ExitPanelExit.activeSelf && !ExitPanelMainMenu.activeSelf)
         {
             PausePanel.SetActive(true);
             Time.timeScale = 0;
@@ -181,7 +181,7 @@ public class GameScript : MonoBehaviour {
             */
         }
 
-        else if (Input.GetKeyDown(KeyCode.Escape) && PausePanel.activeSelf)
+        else if (Input.GetKeyDown(KeyCode.Escape) && PausePanel.activeSelf && !ExitPanelExit.activeSelf && !ExitPanelMainMenu.activeSelf)
         {
             PausePanel.SetActive(false);
             Time.timeScale = 1;
